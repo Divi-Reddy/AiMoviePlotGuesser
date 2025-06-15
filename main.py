@@ -6,11 +6,23 @@ import random
 from dotenv import load_dotenv
 from movies import movie_titles 
 
+
+from fastapi.middleware.cors import CORSMiddleware
+
+
+
 load_dotenv()
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 omdbKey= os.getenv("ODMB_API_KEY")
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # For development only; restrict in production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 def getRandomMovie():
